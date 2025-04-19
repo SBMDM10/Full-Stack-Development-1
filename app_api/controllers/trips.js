@@ -57,6 +57,10 @@ if(!q)
 // and JSON message to the requesting client
 const tripsAddTrip = async(req, res) => {
     try {
+        const user = getUser(req);
+        if(!user) {
+            return res.status(401).json({message: "Unauthorized" });
+        }
         const q = await Model.create({
             code: req.body.code,
             name: req.body.name,
@@ -82,6 +86,10 @@ const tripsAddTrip = async(req, res) => {
 // and JSON message to the requesting client
 const tripsUpdateTrip = async(req, res) => {
     try {
+        const user = getUser(req);
+        if(!user) {
+            return res.status(401).json({message: "Unauthorized" });
+        }
         const q = await Model.findOneAndUpdate({'code':req.params.tripCode},
             {
                 code: req.body.code,
